@@ -1,0 +1,395 @@
+{
+    "openapi": "3.0.0",
+    "información": {
+        "title": "API Psicoalianza",
+        "description": "Documentación para consumir end-points de Psicoalianza",
+        "contacto": {
+            "correo electrónico": "admin@admin.com"
+        },
+        "versión": "1.0.0"
+    },
+    "servidores": [
+        {
+            "url": "http://api2.psicoalianza.com/"
+        }
+    ],
+    "caminos": {
+        "/api/procesos": {
+            "conseguir": {
+                "etiquetas": [
+                    "Procesos"
+                ],
+                "summary": "Obtener procesos",
+                "description": "Obtener todos los procesos asociados a la empresa",
+                "operacionId": "GetProceso",
+                "respuestas": {
+                    "200": {
+                        "description": "Respuesta exitosa",
+                        "contenido": {
+                            "aplicación/json": {
+                                "esquema": {
+                                    "propiedades": {
+                                        "datos": {
+                                            "tipo": "matriz",
+                                            "elementos": {
+                                                "propiedades": {
+                                                    "id_proceso": {
+                                                        "tipo": "entero",
+                                                        "ejemplo": "220"
+                                                    },
+                                                    "proceso_nombre": {
+                                                        "tipo": "cadena",
+                                                        "ejemplo": "Proceso de selección"
+                                                    },
+                                                    "id_empresa": {
+                                                        "tipo": "entero",
+                                                        "Ejemplo 1"
+                                                    },
+                                                    "fecha_cierre": {
+                                                        "tipo": "fecha",
+                                                        "ejemplo": "2019-06-13"
+                                                    },
+                                                    "numero_vacantes": {
+                                                        "tipo": "entero",
+                                                        "Ejemplo 1"
+                                                    },
+                                                    "verificacion_identidad": {
+                                                        "tipo": "booleano",
+                                                        "Ejemplo 1"
+                                                    },
+                                                    "estado": {
+                                                        "tipo": "booleano",
+                                                        "ejemplo": "0"
+                                                    },
+                                                    "Creado en": {
+                                                        "tipo": "fecha-hora",
+                                                        "ejemplo": "2019-06-13T22:08:12"
+                                                    },
+                                                    "actualizado_en": {
+                                                        "tipo": "fecha-hora",
+                                                        "ejemplo": "2019-06-13T22:08:12"
+                                                    }
+                                                },
+                                                "tipo": "objeto"
+                                            }
+                                        }
+                                    },
+                                    "tipo": "objeto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "seguridad": [
+                    {
+                        "Autorización": [],
+                        "Ficha": []
+                    }
+                ]
+            },
+            "correo": {
+                "etiquetas": [
+                    "Procesos"
+                ],
+                "summary": "Crear proceso",
+                "description": "Creación de procesos y asignación de pruebas",
+                "operacionId": "PostProceso",
+                "solicitudCuerpo": {
+                    "description": "Cuerpo de la solicitud",
+                    "requerido": verdadero,
+                    "contenido": {
+                        "aplicación/json": {
+                            "esquema": {
+                                "requerido": [
+                                    "proceso_nombre",
+                                    "fecha_cierre",
+                                    "numero_vacantes",
+                                    "pruebas",
+                                    "id_prueba"
+                                ],
+                                "propiedades": {
+                                    "proceso_nombre": {
+                                        "tipo": "cadena",
+                                        "ejemplo": "Proceso de prueba"
+                                    },
+                                    "fecha_cierre": {
+                                        "description": "Mayor o igual a fecha actual",
+                                        "tipo": "fecha",
+                                        "ejemplo": "2022-07-31"
+                                    },
+                                    "numero_vacantes": {
+                                        "tipo": "entero",
+                                        "formato": "int64",
+                                        "ejemplo": "5"
+                                    },
+                                    "proceso_estado": {
+                                        "tipo": "booleano",
+                                        "ejemplo": "verdadero"
+                                    },
+                                    "verificacion_identidad": {
+                                        "tipo": "booleano",
+                                        "ejemplo": "verdadero"
+                                    },
+                                    "pruebas": {
+                                        "tipo": "matriz",
+                                        "elementos": {
+                                            "requerido": [
+                                                "id_prueba",
+                                                "id_perfil",
+                                                "valor_porcentual"
+                                            ],
+                                            "propiedades": {
+                                                "id_prueba": {
+                                                    "description": "No se debe repetir en el array de pruebas",
+                                                    "tipo": "entero",
+                                                    "formato": "int64",
+                                                    "Ejemplo 1"
+                                                },
+                                                "id_perfil": {
+                                                    "description": "Asociado a id_prueba",
+                                                    "tipo": "entero",
+                                                    "formato": "int64",
+                                                    "ejemplo": "18"
+                                                },
+                                                "valor_porcentual": {
+                                                    "description": "La suma de valor porcentual debe ser igual a 100",
+                                                    "tipo": "entero",
+                                                    "formato": "int64",
+                                                    "ejemplo": "100"
+                                                }
+                                            },
+                                            "tipo": "objeto"
+                                        }
+                                    }
+                                },
+                                "tipo": "objeto"
+                            }
+                        }
+                    }
+                },
+                "respuestas": {
+                    "422": {
+                        "description": "Respuesta de solicitud incorrecta",
+                        "contenido": {
+                            "aplicación/json": {
+                                "esquema": {
+                                    "propiedades": {
+                                        "error": {
+                                            "propiedades": {
+                                                "proceso_nombre": {
+                                                    "tipo": "matriz",
+                                                    "elementos": {
+                                                        "tipo": "cadena",
+                                                        "ejemplo": [
+                                                            "El campo proceso nombre es requerido.",
+                                                            "El nombre del proceso ya existe."
+                                                        ]
+                                                    },
+                                                    "collectionFormat": "multi"
+                                                },
+                                                "fecha_cierre": {
+                                                    "tipo": "matriz",
+                                                    "elementos": {
+                                                        "tipo": "cadena",
+                                                        "ejemplo": [
+                                                            "El campo fecha_cierre debe ser mayor o igual a Fecha actual."
+                                                        ]
+                                                    },
+                                                    "collectionFormat": "multi"
+                                                }
+                                            },
+                                            "tipo": "objeto"
+                                        }
+                                    },
+                                    "tipo": "objeto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "seguridad": [
+                    {
+                        "Autorización": [],
+                        "Ficha": []
+                    }
+                ]
+            }
+        },
+        "/api/pruebas": {
+            "conseguir": {
+                "etiquetas": [
+                    "Pruebas"
+                ],
+                "summary": "Obtener pruebas con sus perfiles",
+                "description": "Obtener todas las pruebas con sus perfiles asociados a la empresa",
+                "operationId": "GetPruebas",
+                "respuestas": {
+                    "200": {
+                        "description": "Respuesta exitosa",
+                        "contenido": {
+                            "aplicación/json": {
+                                "esquema": {
+                                    "propiedades": {
+                                        "datos": {
+                                            "tipo": "matriz",
+                                            "elementos": {
+                                                "propiedades": {
+                                                    "id_prueba": {
+                                                        "tipo": "entero",
+                                                        "Ejemplo 1"
+                                                    },
+                                                    "prueba_nombre": {
+                                                        "tipo": "cadena",
+                                                        "ejemplo": "Diez DISCOS"
+                                                    },
+                                                    "prueba_descripcion": {
+                                                        "tipo": "cadena",
+                                                        "ejemplo": "Personalidad, Competencias y Riesgos Laborales"
+                                                    },
+                                                    "perfiles": {
+                                                        "tipo": "matriz",
+                                                        "elementos": {
+                                                            "propiedades": {
+                                                                "id_perfil": {
+                                                                    "tipo": "entero",
+                                                                    "ejemplo": "18"
+                                                                },
+                                                                "perfil_nombre": {
+                                                                    "tipo": "cadena",
+                                                                    "ejemplo": "Directiva"
+                                                                },
+                                                                "perfil_descripcion": {
+                                                                    "tipo": "cadena",
+                                                                    "ejemplo": "Directiva"
+                                                                }
+                                                            },
+                                                            "tipo": "objeto"
+                                                        }
+                                                    }
+                                                },
+                                                "tipo": "objeto"
+                                            }
+                                        }
+                                    },
+                                    "tipo": "objeto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "seguridad": [
+                    {
+                        "Autorización": [],
+                        "Ficha": []
+                    }
+                ]
+            }
+        },
+        "/api/resultados": {
+            "correo": {
+                "etiquetas": [
+                    "Resultados"
+                ],
+                "summary": "Obtener resultados",
+                "description": "Obtener resultados de la prueba de un participante",
+                "operationId": "PostResultados",
+                "solicitudCuerpo": {
+                    "description": "Cuerpo de la solicitud",
+                    "requerido": verdadero,
+                    "contenido": {
+                        "aplicación/json": {
+                            "esquema": {
+                                "requerido": [
+                                    "id_proceso",
+                                    "id_prueba",
+                                    "id_tipo_documento",
+                                    "documento"
+                                ],
+                                "propiedades": {
+                                    "id_proceso": {
+                                        "tipo": "entero",
+                                        "Ejemplo 1"
+                                    },
+                                    "id_prueba": {
+                                        "tipo": "entero",
+                                        "Ejemplo 1"
+                                    },
+                                    "id_tipo_documento": {
+                                        "tipo": "entero",
+                                        "Ejemplo 1"
+                                    },
+                                    "documento": {
+                                        "tipo": "cadena",
+                                        "ejemplo": "1036363636"
+                                    }
+                                },
+                                "tipo": "objeto"
+                            }
+                        }
+                    }
+                },
+                "respuestas": {
+                    "422": {
+                        "description": "Respuesta de solicitud incorrecta",
+                        "contenido": {
+                            "aplicación/json": {
+                                "esquema": {
+                                    "propiedades": {
+                                        "error": {
+                                            "propiedades": {
+                                                "id_proceso": {
+                                                    "tipo": "matriz",
+                                                    "elementos": {
+                                                        "tipo": "cadena",
+                                                        "ejemplo": [
+                                                            "El campo id_proceso es requerido.",
+                                                            "El campo id_proceso no existe en base de datos."
+                                                        ]
+                                                    },
+                                                    "collectionFormat": "multi"
+                                                },
+                                                "id_prueba": {
+                                                    "tipo": "matriz",
+                                                    "elementos": {
+                                                        "tipo": "cadena",
+                                                        "ejemplo": [
+                                                            "El campo id_prueba es requerido.",
+                                                            "El campo id_prueba no existe en base de datos."
+                                                        ]
+                                                    },
+                                                    "collectionFormat": "multi"
+                                                }
+                                            },
+                                            "tipo": "objeto"
+                                        }
+                                    },
+                                    "tipo": "objeto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "seguridad": [
+                    {
+                        "Autorización": [],
+                        "Ficha": []
+                    }
+                ]
+            }
+        }
+    },
+    "componentes": {
+        "esquemas de seguridad": {
+            "Ficha": {
+                "tipo": "apiKey",
+                "nombre": "Token",
+                "en": "encabezado"
+            },
+            "Autorización": {
+                "tipo": "apiKey",
+                "nombre": "Autorización",
+                "en": "encabezado"
+            }
+        }
+    }
+}
